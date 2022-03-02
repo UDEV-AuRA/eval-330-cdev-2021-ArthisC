@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: header">
+</head>
+<body>
+	<div th:replace="fragments/common :: menu">
+	</div>
+	<div>
+		<div class="container">
+			<h2>Détail de l'artiste [[${artist.name}]]</h2>
+			<div class="row">
+				<form id="saveFormArtist" action="/artists" method="post">
+					<div class="col-lg-12">
+						<div class="form-group">
+							<input type="hidden" th:value="${artist.id}" th:name="id">
+							<label for="name" class="form-control-label">Nom</label>
+							<input type="text" name="name" id="name" th:value="${artist.name}" class="form-control ">
+
+
+							<label class="form-control-label">Albums</label>
+							<div class="row">
+								<ul th:each="album : ${artist.albums}">
+								<div class="col-lg-10">
+									<div class="list-group">
+										<li th:text="${album.title}" class="list-group-item">&nbsp;Let There Be Rock</li>
+										<!--<li class="list-group-item">&nbsp;For Those About To Rock We Salute You</li>-->
+									</div>
+								</div>
+								<div class="col-lg-2 text-center">
+									<div class="list-group text-center">
+										<a th:href="|/albums/${album.id}/delete|" class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></a>
+										<!--<button class="btn-danger list-group-item list-group-item-action"><span class="glyphicon glyphicon-remove"></span></button>-->
+									</div>
+								</div>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<form id="saveFormAlbum" action="/albums" method="post">
+					<div class="col-lg-10">
+						<div class="form-group">
+							<input type="hidden" th:value="${artist.id}" name="artistId" id="artistId">
+							<input type="text" name="title" id="title" placeholder="Ajouter un album..." class="form-control  ">
+						</div>
+					</div>
+				</form>
+				<div class="col-lg-2 text-center">
+					<button form="saveFormAlbum" type="submit" class="btn-success list-group-item list-group-item-action"><span class="glyphicon glyphicon-plus"></span></button>
+				</div>
+			</div>
+
+			<div class="row">
+				<input form="saveFormArtist" class="btn btn-primary" type="submit" value="Enregistrer">
+				<a th:href="|/artists/${artist.id}/delete|" class="btn btn-danger">Supprimer</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
